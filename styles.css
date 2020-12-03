@@ -1,3 +1,20 @@
 h1 {
   color: red;
 }
+
+body {
+  max-width: 1200px;
+  margin: auto;
+}
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid blue;
+  justify-content: space-around;
+}
+
+.card {
+  width: 350px;
+  height: 400px;
+  border: 1px solid green;
+}

@@ -90,7 +90,7 @@ const getEmployees = () => {
       render();
     })
     .catch((err) => {
-      // state.errorOccured = true;
+      state.errorOccured = false;
       // state.errorMessage = err.response.data.message;
       // state.errorStatus = err.response.status;
       state.loading = false;
@@ -99,9 +99,26 @@ const getEmployees = () => {
     });
 };
 
+const deleteEmployee = (employeeId) => {
+  console.log(employeeId);
+  // I want a new array of employees with the one who's removed from array
+  // map -> change the values filter - remove values foreach- go through each of them
+  let filteredEmployess = state.employees.filter((e) => e.id !== employeeId);
+
+  state.employees = filteredEmployess;
+  render();
+};
+
 // takes an employee object return string
 const renderEmployee = (employee) => {
-  return `<div>${employee.employee_name}</div>`;
+  return `<div class='card'>
+           <h2>${employee.employee_name}</h2>
+           <p>age: ${employee.employee_age}</p>
+           <p>salary: ${employee.employee_salary}</p>
+           <div class='card-footer'>
+             <div class='btn' onclick='deleteEmployee(${employee.id})'> Delete </div>
+           </div>
+           </div>`;
 };
 
 // takes nothing  return string
@@ -121,15 +138,42 @@ const renderEmployees = () => {
     return renderEmployee(employee);
   });
 
-  return employeeStringArray.join("");
+  // return employeeStringArray.join("")
+  return `<div class='grid'> ${employeeStringArray.join("")} </div>`;
 
   // return employees.map( e => renderEmployee(e)).join('')
+};
+const sortByAge = () => {
+  state.employees.sort((a, b) => b.employee_age - a.employee_age);
+  render();
+};
+
+const sortByLastName = () => {
+  state.employees.sort((emp1, emp2) => {
+    emp1Last = emp1.employee_name.split(" ")[1];
+    emp2Last = emp2.employee_name.split(" ")[1];
+    if (emp1Last < emp2Last) {
+      return -1;
+    }
+    if (emp1Last > emp2Last) {
+      return 1;
+    }
+    return 0;
+  });
+
+  render();
 };
 
 const render = () => {
   let htmlString = "<div>";
   htmlString += "<h1>Employess</h1>";
+  htmlString += "<div class='btn-group'>";
+  htmlString += "<div class='btn' onclick='sortByAge()'>sort by age</div>";
+  htmlString +=
+    "<div class='btn' onclick='sortByLastName()'>sort by last name</div>";
+  htmlString += "</div>";
   // do more stuff here
+
   htmlString += renderEmployees();
   htmlString += "</div>";
   document.getElementById("app").innerHTML = htmlString;
