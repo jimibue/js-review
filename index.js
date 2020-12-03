@@ -1,13 +1,18 @@
 axios
-  .get("http://dummy.restapiexample.com/api/v1/employees")
-  .then(function (response) {
-    // handle success
-    console.log(response);
+  .get("http://dummy.restapiexample.com/api/v1/employeesx")
+  .then((res) => {
+    let employees = res.data.data;
+    console.log(employees);
   })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .then(function () {
-    // always executed
+  .catch((err) => {
+    //
+    let message = err.response.data.message;
+    let status = err.response.status;
   });
+
+// axios
+// .get('url')
+// .then((res)=>{})
+// .catch((err)=>{})
+
+console.log("index loaded");
